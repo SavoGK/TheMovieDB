@@ -15,7 +15,7 @@ class ScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(BordersConstants.borderCircular),
+        borderRadius: BorderRadius.circular(BordersConst.borderCircular),
         side: const BorderSide(
           width: borderWidth,
           color: Colors.indigo,
@@ -26,7 +26,7 @@ class ScoreCard extends StatelessWidget {
         padding: const EdgeInsets.all(sizeCircumference),
         child: Text(
           '$score',
-          style: const TextStyle(fontSize: FontConstants.fontTitle),
+          style: const TextStyle(fontSize: FontConst.fontTitle),
         ),
       ),
     );

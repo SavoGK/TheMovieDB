@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/utils/general_constants.dart';
+import '../utils/general_constants.dart';
+import '../models/genre.dart';
 
 class GenresRow extends StatelessWidget {
-  final List<String> genres;
+  final List<Genre> genres;
   static const double borderWidth = 3;
   static const double spreadRadius = 1;
   static const double paddingGenres = 4;
@@ -30,7 +31,7 @@ class GenresRow extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
-                        BordersConstants.borderCircular,
+                        BordersConst.borderCircular,
                       ),
                       border: Border.all(
                         width: borderWidth,
@@ -44,12 +45,12 @@ class GenresRow extends StatelessWidget {
                     ),
                     child: Padding(
                       padding:
-                          const EdgeInsets.all(PaddingConstants.rowPadding),
+                          const EdgeInsets.all(EdgeInsetsConst.edgeEight),
                       child: Text(
-                        genre,
+                        genre.name,
                         style: const TextStyle(
                           color: Colors.white54,
-                          fontSize: FontConstants.fontText,
+                          fontSize: FontConst.fontText,
                         ),
                       ),
                     ),
