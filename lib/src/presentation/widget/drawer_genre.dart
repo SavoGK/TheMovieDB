@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/models/repository/genre_repository.dart';
-import 'package:the_movie_db/views/movies_genre.dart';
-import '../models/genre.dart';
-import '../models/movie.dart';
-import '../utils/general_constants.dart';
+import '../../data/repository/genre_repository.dart';
+import '../views/movies_genre.dart';
+import '../../data/models/genre.dart';
+import '../../data/models/movie.dart';
+import '../../core/utils/general_constants.dart';
 
 class DrawerGenre extends StatelessWidget {
   final List<Movie> movies;
@@ -20,7 +20,10 @@ class DrawerGenre extends StatelessWidget {
     return movies.where((movie) => movie.genres.contains(genreId)).toList();
   }
 
-  List<Widget> _getWidget(BuildContext context, List<Genre> genres) {
+  List<Widget> _getWidget(
+    BuildContext context,
+    List<Genre> genres,
+  ) {
     var children = <Widget>[];
     children.add(
       const SizedBox(
@@ -89,8 +92,7 @@ class DrawerGenre extends StatelessWidget {
             backgroundColor: Colors.black54,
             width: MediaQuery.of(context).size.width - mediaQueryConst,
             child: ListView(
-              children:
-                  _getWidget(context, genres),
+              children: _getWidget(context, genres),
             ),
           );
         } else {

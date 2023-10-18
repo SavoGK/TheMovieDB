@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/movie.dart';
-import '../utils/general_constants.dart';
+import '../../data/models/movie.dart';
+import '../../core/utils/general_constants.dart';
 
 class MoviePoster extends StatelessWidget {
   final Movie movie;

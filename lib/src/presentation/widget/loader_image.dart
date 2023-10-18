@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../utils/general_constants.dart';
 
 class LoaderImage extends StatelessWidget {
   final String image;

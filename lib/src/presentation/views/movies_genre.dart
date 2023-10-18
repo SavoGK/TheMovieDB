@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/widget/movies_grid.dart';
-import '../models/movie.dart';
-import '../models/genre.dart';
+import '../widget/movies_grid.dart';
+import '../../data/models/movie.dart';
+import '../../data/models/genre.dart';
 
 class MoviesGenre extends StatelessWidget {
   final List<Movie> movies;

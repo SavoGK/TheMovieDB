@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import '../widget/movie_poster.dart';
-import '../utils/general_constants.dart';
+import 'movie_poster.dart';
+import '../../core/utils/general_constants.dart';
 import '../views/movie_deck.dart';
-import '../models/movie.dart';
+import '../../data/models/movie.dart';
 
 class MoviesGrid extends StatelessWidget {
   final List<Movie> movies;
 
   static const String isEmpty = 'There`s not movies of this genre yet';
+  static const double gridAspectRatio = 0.6;
+  static const int gridAxisCount = 2;
 
   const MoviesGrid({
     super.key,
@@ -18,8 +20,8 @@ class MoviesGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     if (movies.isNotEmpty) {
       return GridView.count(
-        childAspectRatio: 0.6,
-        crossAxisCount: 2,
+        childAspectRatio: gridAspectRatio,
+        crossAxisCount: gridAxisCount,
         children: movies.map((movie) {
           return GestureDetector(
             onTap: () {

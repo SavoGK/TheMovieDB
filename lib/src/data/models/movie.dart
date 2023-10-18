@@ -1,4 +1,4 @@
-import '../utils/general_constants.dart';
+import '../../core/utils/general_constants.dart';
 
 class Movie {
   final bool adult;

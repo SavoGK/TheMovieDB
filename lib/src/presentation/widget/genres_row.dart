@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils/general_constants.dart';
-import '../models/genre.dart';
+import '../../core/utils/general_constants.dart';
+import '../../data/models/genre.dart';
 
 class GenresRow extends StatelessWidget {
   final List<Genre> genres;

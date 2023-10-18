@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'repository.dart';
-import '../../utils/general_constants.dart';
-import '../movie.dart';
+import '../../domain/repository/repository.dart';
+import '../../core/utils/general_constants.dart';
+import '../models/movie.dart';
 
 class MovieRepository implements Repository {
   static const String jsonFilePath = 'data/movies.json';

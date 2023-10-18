@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:the_movie_db/utils/general_constants.dart';
-import '../genre.dart';
-import 'repository.dart';
+import '../../core/utils/general_constants.dart';
+import '../models/genre.dart';
+import '../../domain/repository/repository.dart';
 
 class GenreRepository implements Repository {
   static const String jsonFilePath = 'data/genres.json';
-  static List<Genre> genres = [];
+  static List<Genre> genres = <Genre>[];
 
   Future<void> _fetchData() async {
     try {
-      final jsonString = await rootBundle.loadString(jsonFilePath);
+      final String jsonString = await rootBundle.loadString(jsonFilePath);
       final jsonData = jsonDecode(jsonString);
-      final genresList = jsonData["genres"];
+      final genresList = jsonData['genres'];
 
       if (genresList is List) {
         genres = genresList.map((json) => Genre.fromJson(json)).toList();
