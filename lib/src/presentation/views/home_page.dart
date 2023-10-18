@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widget/movies_grid.dart';
-import '../utils/general_constants.dart';
-import '../models/movie.dart';
-import '../models/repository/movie_repository.dart';
+import '../../core/utils/general_constants.dart';
+import '../../domain/entity/movie.dart';
+import '../../data/repository/movie_repository.dart';
 import '../widget/drawer_genre.dart';
 
 class HomePage extends StatefulWidget {

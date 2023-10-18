@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../utils/general_constants.dart';
 
 class LoaderImage extends StatelessWidget {
   final String image;
@@ -19,7 +18,7 @@ class LoaderImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         Image.network(
           image,
           fit: BoxFit.cover,

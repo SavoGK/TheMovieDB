@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/movie.dart';
-import '../utils/general_constants.dart';
+import '../../domain/entity/movie.dart';
+import '../../core/utils/general_constants.dart';
 
 class MoviePoster extends StatelessWidget {
   final Movie movie;
@@ -15,9 +15,9 @@ class MoviePoster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(EdgeInsetsConst.edgeTen),
+      margin: const EdgeInsets.all(EdgeInsetsConst.marginMedium),
       child: Column(
-        children: [
+        children: <Widget>[
           Expanded(
             child: Image.network(
               movie.getPoster(),

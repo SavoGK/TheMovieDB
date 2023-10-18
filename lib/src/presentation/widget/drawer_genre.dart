@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/models/repository/genre_repository.dart';
-import 'package:the_movie_db/views/movies_genre.dart';
-import '../models/genre.dart';
-import '../models/movie.dart';
-import '../utils/general_constants.dart';
+import '../../data/repository/genre_repository.dart';
+import '../views/movies_genre.dart';
+import '../../domain/entity/genre.dart';
+import '../../domain/entity/movie.dart';
+import '../../core/utils/general_constants.dart';
 
 class DrawerGenre extends StatelessWidget {
   final List<Movie> movies;
@@ -17,11 +17,16 @@ class DrawerGenre extends StatelessWidget {
   static const double heightSizeBox = 60;
 
   List<Movie> getMoviesByGenre(int genreId) {
-    return movies.where((movie) => movie.genres.contains(genreId)).toList();
+    return movies
+        .where((Movie movie) => movie.genres.contains(genreId))
+        .toList();
   }
 
-  List<Widget> _getWidget(BuildContext context, List<Genre> genres) {
-    var children = <Widget>[];
+  List<Widget> _getWidget(
+    BuildContext context,
+    List<Genre> genres,
+  ) {
+    List<Widget> children = <Widget>[];
     children.add(
       const SizedBox(
         height: heightSizeBox,
@@ -33,9 +38,10 @@ class DrawerGenre extends StatelessWidget {
             child: Text(
               TitleStrings.genders,
               style: TextStyle(
-                  fontSize: FontConst.fontTitle,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                fontSize: FontConst.fontTitle,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
@@ -43,21 +49,22 @@ class DrawerGenre extends StatelessWidget {
     );
     children.addAll(
       genres.map(
-        (genre) {
+        (Genre genre) {
           return ListTile(
             title: Text(
               genre.name,
               style: const TextStyle(
-                  fontSize: FontConst.fontTitle,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                fontSize: FontConst.fontTitle,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             onTap: () {
               List<Movie> moviesGenre = getMoviesByGenre(genre.id);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MoviesGenre(
+                  builder: (BuildContext context) => MoviesGenre(
                     genre: genre,
                     movies: moviesGenre,
                   ),
@@ -89,8 +96,10 @@ class DrawerGenre extends StatelessWidget {
             backgroundColor: Colors.black54,
             width: MediaQuery.of(context).size.width - mediaQueryConst,
             child: ListView(
-              children:
-                  _getWidget(context, genres),
+              children: _getWidget(
+                context,
+                genres,
+              ),
             ),
           );
         } else {

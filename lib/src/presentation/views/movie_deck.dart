@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/models/repository/genre_repository.dart';
-import 'package:the_movie_db/widget/loader_image.dart';
+import '../../data/repository/genre_repository.dart';
+import '../widget/loader_image.dart';
 import '../widget/genres_row.dart';
-import '../models/genre.dart';
+import '../../domain/entity/genre.dart';
 import '../widget/score_card.dart';
 import '../widget/like_button.dart';
-import '../utils/general_constants.dart';
-import '../models/movie.dart';
+import '../../core/utils/general_constants.dart';
+import '../../domain/entity/movie.dart';
 
 class MovieDeck extends StatelessWidget {
   final Movie movie;
@@ -22,7 +22,7 @@ class MovieDeck extends StatelessWidget {
     List<Genre> genres,
   ) {
     return genres.where(
-      (genre) {
+      (Genre genre) {
         return movie.genres.contains(genre.id);
       },
     ).toList();
@@ -51,16 +51,16 @@ class MovieDeck extends StatelessWidget {
             ),
             body: SingleChildScrollView(
               child: Column(
-                children: [
+                children: <Widget>[
                   LoaderImage(
                     forAdults: movie.adult,
                     image: movie.getThumbnail(),
                   ),
                   Row(
-                    children: [
+                    children: <Widget>[
                       Padding(
                         padding:
-                            const EdgeInsets.all(EdgeInsetsConst.edgeEight),
+                            const EdgeInsets.all(EdgeInsetsConst.marginSmall),
                         child: ScoreCard(
                           score: movie.voteAverage,
                         ),
@@ -68,7 +68,7 @@ class MovieDeck extends StatelessWidget {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: <Widget>[
                             Text(
                               movie.title,
                               style: const TextStyle(
@@ -90,9 +90,9 @@ class MovieDeck extends StatelessWidget {
                     ],
                   ),
                   Row(
-                    children: [
+                    children: <Widget>[
                       const Padding(
-                        padding: EdgeInsets.all(EdgeInsetsConst.edgeEight),
+                        padding: EdgeInsets.all(EdgeInsetsConst.marginSmall),
                         child: Text(
                           TitleStrings.genders,
                           style: TextStyle(
@@ -107,7 +107,7 @@ class MovieDeck extends StatelessWidget {
                     ],
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(EdgeInsetsConst.edgeTen),
+                    padding: EdgeInsets.all(EdgeInsetsConst.marginMedium),
                     child: Text(
                       description,
                       style: TextStyle(
@@ -118,7 +118,7 @@ class MovieDeck extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(EdgeInsetsConst.edgeTen),
+                    padding: const EdgeInsets.all(EdgeInsetsConst.marginMedium),
                     child: Text(
                       movie.overview,
                       style: const TextStyle(
