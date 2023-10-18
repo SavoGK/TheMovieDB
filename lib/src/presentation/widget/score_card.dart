@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/utils/general_constants.dart';
+import '../../core/utils/general_constants.dart';
 
 class ScoreCard extends StatelessWidget {
   final double score;
