@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widget/movies_grid.dart';
 import '../../core/utils/general_constants.dart';
-import '../../data/models/movie.dart';
+import '../../domain/entity/movie.dart';
 import '../../data/repository/movie_repository.dart';
 import '../widget/drawer_genre.dart';
 

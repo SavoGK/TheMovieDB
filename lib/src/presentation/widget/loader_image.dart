@@ -18,7 +18,7 @@ class LoaderImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         Image.network(
           image,
           fit: BoxFit.cover,

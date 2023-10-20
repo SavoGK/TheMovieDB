@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'movie_poster.dart';
 import '../../core/utils/general_constants.dart';
 import '../views/movie_deck.dart';
-import '../../data/models/movie.dart';
+import '../../domain/entity/movie.dart';
 
 class MoviesGrid extends StatelessWidget {
   final List<Movie> movies;
@@ -22,13 +22,13 @@ class MoviesGrid extends StatelessWidget {
       return GridView.count(
         childAspectRatio: gridAspectRatio,
         crossAxisCount: gridAxisCount,
-        children: movies.map((movie) {
+        children: movies.map((Movie movie) {
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MovieDeck(
+                  builder: (BuildContext context) => MovieDeck(
                     movie: movie,
                   ),
                 ),

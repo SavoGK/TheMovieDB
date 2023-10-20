@@ -5,8 +5,8 @@ class FontConst {
 }
 
 class EdgeInsetsConst {
-  static const double edgeEight = 8;
-  static const double edgeTen = 10;
+  static const double marginSmall = 8;
+  static const double marginMedium = 10;
 }
 
 class BordersConst {
@@ -14,7 +14,7 @@ class BordersConst {
 }
 
 class AppName {
-  static const String name = "Peliculero";
+  static const String name = 'Peliculero';
 }
 
 class RepositoryStrings {

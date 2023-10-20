@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/utils/general_constants.dart';
-import '../../data/models/genre.dart';
+import '../../domain/entity/genre.dart';
 
 class GenresRow extends StatelessWidget {
   final List<Genre> genres;
@@ -26,7 +26,7 @@ class GenresRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: genres
               .map(
-                (genre) => Padding(
+                (Genre genre) => Padding(
                   padding: const EdgeInsets.all(paddingGenres),
                   child: Container(
                     decoration: BoxDecoration(
@@ -37,15 +37,14 @@ class GenresRow extends StatelessWidget {
                         width: borderWidth,
                         color: Colors.indigo,
                       ),
-                      boxShadow: const [
+                      boxShadow: const <BoxShadow>[
                         BoxShadow(
                           spreadRadius: spreadRadius,
                         ),
                       ],
                     ),
                     child: Padding(
-                      padding:
-                          const EdgeInsets.all(EdgeInsetsConst.edgeEight),
+                      padding: const EdgeInsets.all(EdgeInsetsConst.marginSmall),
                       child: Text(
                         genre.name,
                         style: const TextStyle(

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import '../../data/repository/genre_repository.dart';
 import '../widget/loader_image.dart';
 import '../widget/genres_row.dart';
-import '../../data/models/genre.dart';
+import '../../domain/entity/genre.dart';
 import '../widget/score_card.dart';
 import '../widget/like_button.dart';
 import '../../core/utils/general_constants.dart';
-import '../../data/models/movie.dart';
+import '../../domain/entity/movie.dart';
 
 class MovieDeck extends StatelessWidget {
   final Movie movie;
@@ -60,7 +60,7 @@ class MovieDeck extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding:
-                            const EdgeInsets.all(EdgeInsetsConst.edgeEight),
+                            const EdgeInsets.all(EdgeInsetsConst.marginSmall),
                         child: ScoreCard(
                           score: movie.voteAverage,
                         ),
@@ -92,7 +92,7 @@ class MovieDeck extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       const Padding(
-                        padding: EdgeInsets.all(EdgeInsetsConst.edgeEight),
+                        padding: EdgeInsets.all(EdgeInsetsConst.marginSmall),
                         child: Text(
                           TitleStrings.genders,
                           style: TextStyle(
@@ -107,7 +107,7 @@ class MovieDeck extends StatelessWidget {
                     ],
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(EdgeInsetsConst.edgeTen),
+                    padding: EdgeInsets.all(EdgeInsetsConst.marginMedium),
                     child: Text(
                       description,
                       style: TextStyle(
@@ -118,7 +118,7 @@ class MovieDeck extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(EdgeInsetsConst.edgeTen),
+                    padding: const EdgeInsets.all(EdgeInsetsConst.marginMedium),
                     child: Text(
                       movie.overview,
                       style: const TextStyle(

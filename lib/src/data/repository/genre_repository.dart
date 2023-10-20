@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../../core/utils/general_constants.dart';
-import '../models/genre.dart';
+import '../../domain/entity/genre.dart';
 import '../../domain/repository/repository.dart';
+import '../models/genre_model.dart';
 
 class GenreRepository implements Repository {
-  static const String jsonFilePath = 'data/genres.json';
-  static List<Genre> genres = <Genre>[];
+  static const String jsonFilePath = 'assets/data/genres.json';
+  static List<GenreModel> genres = <GenreModel>[];
 
   Future<void> _fetchData() async {
     try {
@@ -16,7 +17,7 @@ class GenreRepository implements Repository {
       final genresList = jsonData['genres'];
 
       if (genresList is List) {
-        genres = genresList.map((json) => Genre.fromJson(json)).toList();
+        genres = genresList.map((json) => GenreModel.fromJson(json)).toList();
       } else {
         throw const FormatException(RepositoryStrings.errorFormat);
       }
