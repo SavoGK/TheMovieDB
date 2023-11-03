@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../data/repository/genre_repository.dart';
+import '../../core/utils/data_state.dart';
+import '../bloc/genres_bloc.dart';
 import '../widget/loader_image.dart';
 import '../widget/genres_row.dart';
 import '../../domain/entity/genre.dart';
@@ -10,6 +11,7 @@ import '../../domain/entity/movie.dart';
 
 class MovieDeck extends StatelessWidget {
   final Movie movie;
+  static final GenresBloc genres = GenresBloc();
   static const String description = 'Description';
   static const double sizeFontReleaseDate = 13;
 
@@ -30,19 +32,23 @@ class MovieDeck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: GenreRepository().getData(),
+    return StreamBuilder(
+      stream: genres.genres,
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<Genre>> snapshot,
+        AsyncSnapshot<DataState> snapshot,
       ) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
+        if (snapshot.data is DataLoading){
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.data is DataFailed) {
           return Text('${FutureConst.error} ${snapshot.error}');
-        } else if (snapshot.hasData) {
-          List<Genre> movieGenres =
-              getGenresForMovie(snapshot.data!);
+        } else {
+          List<Genre> movieGenres = <Genre>[];
+          if (snapshot.data != null) {
+            movieGenres = getGenresForMovie(snapshot.data?.data);
+          } else {
+            genres.fetchGenres();
+          }
           return Scaffold(
             backgroundColor: Colors.black,
             appBar: AppBar(
@@ -135,8 +141,6 @@ class MovieDeck extends StatelessWidget {
               ),
             ),
           );
-        } else {
-          return Text('${FutureConst.state} ${snapshot.connectionState}');
         }
       },
     );

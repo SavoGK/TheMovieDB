@@ -28,10 +28,24 @@ class FutureConst {
   static const int positionZero = 0;
 }
 
-class ApiEndPoints {
-  static const String urlImages = 'https://image.tmdb.org/t/p/original';
-}
-
 class TitleStrings {
   static const String genders = 'Genders';
+}
+
+class ApiServiceConst {
+  static const String urlImages = 'https://image.tmdb.org/t/p/original';
+  static const String authorization = 'Authorization';
+  static const String bearer = 'Bearer ';
+  static const String nowPlaying = '/movie/now_playing';
+  static const String popular = '/movie/popular';
+  static const String topRated = '/movie/top_rated';
+  static const String upcoming = '/movie/upcoming';
+  static const String movie = '/discover/movie';
+  static const String urlMovie = 'https://api.themoviedb.org/3';
+  static const String apiKey =
+      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNzA2YjExZjlmMDNmYWE1M2Y1YTVkZGM3ZWM0NTU'
+      'xZCIsInN1YiI6IjY1MzY2YWE4YzE0ZmVlMDBlMzVmYjRiZCIsInNjb3BlcyI6WyJhcGlfcmV'
+      'hZCJdLCJ2ZXJzaW9uIjoxfQ.xNqVxoM-ribNnQbHvonSPHDEVMXvRp_PajwUDzX6mtY';
+  static const String apiErrorMessage =
+      'An error occurred while trying to get the data.';
 }

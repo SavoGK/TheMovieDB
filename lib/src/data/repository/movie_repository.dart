@@ -1,35 +1,22 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/services.dart';
+import '../../core/utils/data_state.dart';
 import '../../domain/repository/repository.dart';
-import '../../core/utils/general_constants.dart';
-import '../../domain/entity/movie.dart';
-import '../models/movie_model.dart';
+import '../data_source/remote/api_service_movie.dart';
 
 class MovieRepository implements Repository {
-  static const String jsonFilePath = 'assets/data/movies.json';
-  static List<MovieModel> movies = <MovieModel>[];
-
-  Future<void> fetchData() async {
-    try {
-      final String jsonString = await rootBundle.loadString(jsonFilePath);
-      final jsonData = jsonDecode(jsonString);
-
-      if (jsonData is List) {
-        movies = jsonData.map((json) => MovieModel.fromJson(json)).toList();
-      } else {
-        throw const FormatException(RepositoryStrings.errorFormat);
-      }
-    } catch (e) {
-      print('${RepositoryStrings.errorLoading} $e');
-    }
-  }
+  static final ApiServiceMovie apiService = ApiServiceMovie();
 
   @override
-  Future<List<Movie>> getData() async {
-    if (movies.isEmpty) {
-      await fetchData();
+  Future<DataState> getData({
+    String? endPoint,
+    Map<String, dynamic>? params,
+  }) async {
+    final DataState dataState =
+        await apiService.getDataFromApi(endPoint!, params: params);
+    if (dataState is DataSuccess) {
+      return DataSuccess(dataState.data);
+    } else {
+      return dataState;
     }
-    return movies;
   }
 }

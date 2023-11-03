@@ -33,7 +33,7 @@ class Movie {
     required this.voteCount,
   });
 
-  String getThumbnail() => ApiEndPoints.urlImages + thumbnail;
+  String getThumbnail() => ApiServiceConst.urlImages + thumbnail;
 
-  String getPoster() => ApiEndPoints.urlImages + poster;
+  String getPoster() => ApiServiceConst.urlImages + poster;
 }

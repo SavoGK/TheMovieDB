@@ -28,14 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-
   flutter:
     sdk: flutter
   community_material_icon: ^5.4.55
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  infinite_scroll_pagination: ^4.0.0
+  provider: ^6.0.5
   cupertino_icons: ^1.0.2
+  dio: ^5.3.3
+  awesome_dio_interceptor: ^1.0.0
 
 dev_dependencies:
   lint: ^2.0.0

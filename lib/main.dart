@@ -8,7 +8,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      themeMode: ThemeMode.dark,
       home: Scaffold(
         body: SafeArea(
           child: Center(

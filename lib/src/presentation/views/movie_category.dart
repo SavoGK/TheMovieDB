@@ -1,34 +1,51 @@
 import 'package:flutter/material.dart';
 import '../../core/utils/data_state.dart';
 import '../../core/utils/general_constants.dart';
+import '../../data/data_source/remote/api_service_movie.dart';
+import '../../data/repository/movie_repository.dart';
 import '../../domain/entity/movie.dart';
+import '../bloc/genres_bloc.dart';
 import '../bloc/movies_bloc.dart';
 import '../widget/movies_grid.dart';
-import '../../domain/entity/genre.dart';
 
-class MoviesGenre extends StatefulWidget {
-  final Genre genre;
+class MoviesCategory extends StatefulWidget {
   final MoviesBloc moviesBloc;
+  final GenresBloc genres;
+  final String nameCategory;
   final Categories categories;
 
-  const MoviesGenre({
-    required this.genre,
+  const MoviesCategory({
     super.key,
     required this.moviesBloc,
+    required this.genres,
+    required this.nameCategory,
     required this.categories,
   });
 
   @override
-  State<MoviesGenre> createState() => _MoviesGenreState();
+  State<MoviesCategory> createState() => _MoviesCategoryState();
 }
 
-class _MoviesGenreState extends State<MoviesGenre> {
+class _MoviesCategoryState extends State<MoviesCategory> {
+  void initState() {
+    super.initState();
+    widget.moviesBloc.fetchMovies(categories: widget.categories);
+  }
+
+  @override
+  void dispose() {
+    widget.moviesBloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: widget.moviesBloc.movies,
-      builder: (BuildContext context,
-          AsyncSnapshot<DataState> snapshot,) {
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<DataState> snapshot,
+      ) {
         if (snapshot.data is DataLoading) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -39,7 +56,6 @@ class _MoviesGenreState extends State<MoviesGenre> {
           if (snapshot.data == null) {
             widget.moviesBloc.fetchMovies(
               categories: widget.categories,
-              genre: '${widget.genre.id}',
             );
             movies = <Movie>[];
           } else {
@@ -49,7 +65,7 @@ class _MoviesGenreState extends State<MoviesGenre> {
             backgroundColor: Colors.black87,
             appBar: AppBar(
               backgroundColor: Colors.black87,
-              title: Text(widget.genre.name),
+              title: Text(widget.nameCategory),
             ),
             body: MoviesGrid(
               movies: movies,

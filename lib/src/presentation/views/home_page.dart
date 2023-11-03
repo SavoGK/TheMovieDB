@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import '../../core/utils/data_state.dart';
+import '../../domain/entity/movie.dart';
+import '../bloc/genres_bloc.dart';
+import '../bloc/movies_bloc.dart';
 import '../widget/movies_grid.dart';
 import '../../core/utils/general_constants.dart';
-import '../../domain/entity/movie.dart';
-import '../../data/repository/movie_repository.dart';
 import '../widget/drawer_genre.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({
+  HomePage({
     super.key,
   });
 
@@ -15,31 +17,54 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GenresBloc genresBloc = GenresBloc();
+  final MoviesBloc moviesBlocByGenre = MoviesBloc();
+  final MoviesBloc moviesBlocGeneral = MoviesBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    moviesBlocByGenre.fetchMovies(categories: Categories.movie);
+    genresBloc.fetchGenres();
+  }
+
+  @override
+  void dispose() {
+    genresBloc.dispose();
+    moviesBlocByGenre.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: MovieRepository().getData(),
+    return StreamBuilder<DataState>(
+      stream: moviesBlocByGenre.movies,
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<Movie>> snapshot,
+        AsyncSnapshot<DataState> snapshot,
       ) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
+        if (snapshot.data is DataLoading){
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.data is DataFailed) {
           return Text('${FutureConst.error} ${snapshot.error}');
         } else {
-          List<Movie> movies = snapshot.data!;
+          List<Movie> movies = <Movie>[];
+          if (snapshot.data == null) {
+            moviesBlocByGenre.fetchMovies(categories: Categories.movie);
+            movies = <Movie>[];
+          } else {
+            movies = snapshot.data?.data;
+          }
           return Scaffold(
             backgroundColor: Colors.black87,
             appBar: AppBar(
               backgroundColor: Colors.black87,
               title: const Text(AppName.name),
             ),
-            drawer: DrawerGenre(
+            drawer: const DrawerGenre(),
+            body: MoviesGrid(
               movies: movies,
             ),
-            body: MoviesGrid(movies: movies)
           );
         }
       },
