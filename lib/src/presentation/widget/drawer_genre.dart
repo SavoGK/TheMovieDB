@@ -9,8 +9,12 @@ import '../../domain/entity/genre.dart';
 import '../../core/utils/general_constants.dart';
 
 class DrawerGenre extends StatefulWidget {
+  final GenresBloc genresBloc;
 
-  const DrawerGenre({super.key});
+  DrawerGenre({
+    super.key,
+    GenresBloc? genresBloc,
+  }) : genresBloc = genresBloc ?? GenresBloc();
 
   @override
   State<DrawerGenre> createState() => _DrawerGenreState();
@@ -25,17 +29,22 @@ class _DrawerGenreState extends State<DrawerGenre> {
   static const String popular = 'Popular';
   static const String topRated = 'Top Rated';
   static const String upcoming = 'Upcoming';
-  static final MoviesBloc moviesCategoryBloc = MoviesBloc();
-  static final GenresBloc genresBloc = GenresBloc();
+
+  @override
+  void initState() {
+    widget.genresBloc.fetchGenres();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return StreamBuilder<DataState>(
-      stream: genresBloc.genres,
-      builder: (BuildContext context, AsyncSnapshot<DataState> snapshot) {
-        if (snapshot.data == null) {
-          genresBloc.fetchGenres();
-        }
+      stream: widget.genresBloc.genres,
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<DataState> snapshot,
+      ) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
             padding: EdgeInsets.all(marginCircularProgress),
@@ -43,21 +52,16 @@ class _DrawerGenreState extends State<DrawerGenre> {
           );
         } else if (snapshot.data is DataFailed) {
           return Text('${snapshot.data?.error}');
-        } else if (snapshot.data is DataSuccess) {
+        } else {
           List<Genre> genres = snapshot.data?.data;
           return Drawer(
-            backgroundColor: Colors.black54,
             width: MediaQuery.of(context).size.width - mediaQueryConst,
             child: ListView(
               children: <Widget>[
                 ListTile(
-                  title: const Text(
+                  title: Text(
                     nowPlaying,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: FontConst.fontTitle,
-                    ),
+                    style: textTheme.titleLarge,
                   ),
                   onTap: () {
                     Navigator.push(
@@ -65,91 +69,71 @@ class _DrawerGenreState extends State<DrawerGenre> {
                       MaterialPageRoute(
                         builder: (BuildContext context) => MoviesCategory(
                           moviesBloc: MoviesBloc(),
-                          genres: genresBloc,
                           nameCategory: nowPlaying,
-                          categories: Categories.nowPlaying,
+                          categories: CategoriesMovies.nowPlaying,
                         ),
                       ),
                     );
                   },
                 ),
                 ListTile(
-                  title: const Text(
+                  title: Text(
                     popular,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: FontConst.fontTitle,
-                    ),
+                    style: textTheme.titleLarge,
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => MoviesCategory(
-                          moviesBloc: moviesCategoryBloc,
-                          genres: genresBloc,
+                          moviesBloc: MoviesBloc(),
                           nameCategory: popular,
-                          categories: Categories.popular,
+                          categories: CategoriesMovies.popular,
                         ),
                       ),
                     );
                   },
                 ),
                 ListTile(
-                  title: const Text(
+                  title: Text(
                     topRated,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: FontConst.fontTitle,
-                    ),
+                    style: textTheme.titleLarge,
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => MoviesCategory(
-                          moviesBloc: moviesCategoryBloc,
-                          genres: genresBloc,
+                          moviesBloc: MoviesBloc(),
                           nameCategory: topRated,
-                          categories: Categories.topRated,
+                          categories: CategoriesMovies.topRated,
                         ),
                       ),
                     );
                   },
                 ),
                 ListTile(
-                  title: const Text(
+                  title: Text(
                     upcoming,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: FontConst.fontTitle,
-                    ),
+                    style: textTheme.titleLarge,
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => MoviesCategory(
-                          moviesBloc: moviesCategoryBloc,
-                          genres: genresBloc,
+                          moviesBloc: MoviesBloc(),
                           nameCategory: upcoming,
-                          categories: Categories.upcoming,
+                          categories: CategoriesMovies.upcoming,
                         ),
                       ),
                     );
                   },
                 ),
                 ListTile(
-                  title: const Text(
+                  title: Text(
                     TitleStrings.genders,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: FontConst.fontTitle,
-                    ),
+                    style: textTheme.titleLarge,
                   ),
                   onTap: () {
                     setState(() {
@@ -168,11 +152,7 @@ class _DrawerGenreState extends State<DrawerGenre> {
                               return ListTile(
                                 title: Text(
                                   genre.name,
-                                  style: const TextStyle(
-                                    fontSize: FontConst.fontTitle,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                                  style: textTheme.titleLarge,
                                 ),
                                 onTap: () {
                                   Navigator.push(
@@ -181,8 +161,8 @@ class _DrawerGenreState extends State<DrawerGenre> {
                                       builder: (BuildContext context) =>
                                           MoviesGenre(
                                         genre: genre,
-                                        moviesBloc: moviesCategoryBloc,
-                                        categories: Categories.movie,
+                                        moviesBloc: MoviesBloc(),
+                                        categories: CategoriesMovies.movie,
                                       ),
                                     ),
                                   );
@@ -197,8 +177,6 @@ class _DrawerGenreState extends State<DrawerGenre> {
               ],
             ),
           );
-        } else {
-          return Text('${FutureConst.state} ${snapshot.connectionState}');
         }
       },
     );

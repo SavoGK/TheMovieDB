@@ -15,7 +15,7 @@ class ThemeSwitchButton extends StatelessWidget {
       ) {
         return IconButton(
           icon: Icon(
-            themeManager.isDark ? Icons.sunny : Icons.nightlight_round,
+            themeManager.isDark ? Icons.nightlight_round : Icons.sunny,
           ),
           onPressed: () {
             themeManager.toggleTheme();

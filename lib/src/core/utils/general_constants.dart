@@ -28,6 +28,10 @@ class FutureConst {
   static const int positionZero = 0;
 }
 
+class AuxStrings {
+  static const String empty = '';
+}
+
 class TitleStrings {
   static const String genders = 'Genders';
 }

@@ -2,14 +2,23 @@ import 'dart:async';
 
 import '../../core/bloc/i_bloc.dart';
 import '../../core/utils/data_state.dart';
+import '../../data/data_source/remote/api_service_genres.dart';
 import '../../data/repository/genre_repository.dart';
 import '../../domain/usecase/implementation/get_genres_use_case.dart';
 
 class GenresBloc extends IBloc {
-  late final GetGenresUseCase _useCase =
-      GetGenresUseCase(genreRepository: GenreRepository());
+  late final GetGenresUseCase _useCase;
   final StreamController<DataState> _genres =
       StreamController<DataState>.broadcast();
+
+  GenresBloc({
+    GetGenresUseCase? useCase,
+  }) : _useCase = useCase ??
+            GetGenresUseCase(
+              genreRepository: GenreRepository(
+                apiService: ApiServiceGenres(),
+              ),
+            );
 
   Stream<DataState> get genres => _genres.stream;
 

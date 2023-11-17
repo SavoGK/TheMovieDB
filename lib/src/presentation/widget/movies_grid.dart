@@ -24,6 +24,7 @@ class MoviesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
     if (movies.isNotEmpty) {
       return GridView.count(
         childAspectRatio: gridAspectRatio,
@@ -46,13 +47,10 @@ class MoviesGrid extends StatelessWidget {
         }).toList(),
       );
     } else {
-      return const Center(
+      return Center(
         child: Text(
           isEmpty,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: FontConst.fontTitle,
-          ),
+          style: textTheme.titleLarge,
         ),
       );
     }

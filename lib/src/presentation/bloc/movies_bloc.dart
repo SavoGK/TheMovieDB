@@ -2,18 +2,27 @@ import 'dart:async';
 import '../../core/bloc/i_bloc.dart';
 import '../../core/utils/data_state.dart';
 import '../../core/utils/general_constants.dart';
+import '../../data/data_source/remote/api_service_movie.dart';
 import '../../data/repository/movie_repository.dart';
 import '../../domain/usecase/implementation/get_movies_use_case.dart';
 
 class MoviesBloc extends IBloc {
   final StreamController<DataState> _movies =
       StreamController<DataState>.broadcast();
-  final GetMoviesUseCase _useCase =
-      GetMoviesUseCase(movieRepository: MovieRepository());
+  final GetMoviesUseCase _useCase;
   static const int _numberPage = 1;
   static const String _paramPage = 'page';
   static const String _paramGenre = 'with_genres';
   final Map<String, dynamic> _params = <String, dynamic>{};
+
+  MoviesBloc({
+    GetMoviesUseCase? useCase,
+  }) : _useCase = useCase ??
+            GetMoviesUseCase(
+              movieRepository: MovieRepository(
+                apiService: ApiServiceMovie(),
+              ),
+            );
 
   Stream<DataState> get movies => _movies.stream;
 
@@ -21,14 +30,12 @@ class MoviesBloc extends IBloc {
   void dispose() => _movies.close();
 
   void fetchMovies({
-    required Categories categories,
+    required CategoriesMovies categories,
     String? genre,
   }) async {
     _movies.sink.add(DataLoading());
     _params[_paramPage] = '$_numberPage';
-    if (genre == null) {
-      _params[_paramGenre] = '';
-    } else {
+    if (genre != null) {
       _params[_paramGenre] = genre;
     }
     DataState dataState = await _useCase.call(
@@ -39,6 +46,8 @@ class MoviesBloc extends IBloc {
       _movies.sink.add(
         DataSuccess(dataState.data),
       );
+    } else if (dataState is DataEmpty) {
+      _movies.sink.add(DataEmpty());
     } else {
       _movies.sink.add(
         DataFailed(dataState.error as Exception),
@@ -53,7 +62,7 @@ class MoviesBloc extends IBloc {
   }
 }
 
-enum Categories {
+enum CategoriesMovies {
   topRated,
   upcoming,
   popular,
@@ -62,15 +71,15 @@ enum Categories {
 
   String get endPoint {
     switch (this) {
-      case Categories.topRated:
+      case CategoriesMovies.topRated:
         return ApiServiceConst.topRated;
-      case Categories.upcoming:
+      case CategoriesMovies.upcoming:
         return ApiServiceConst.upcoming;
-      case Categories.popular:
+      case CategoriesMovies.popular:
         return ApiServiceConst.popular;
-      case Categories.nowPlaying:
+      case CategoriesMovies.nowPlaying:
         return ApiServiceConst.nowPlaying;
-      case Categories.movie:
+      case CategoriesMovies.movie:
         return ApiServiceConst.movie;
     }
   }

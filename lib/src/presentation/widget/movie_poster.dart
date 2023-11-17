@@ -14,6 +14,7 @@ class MoviePoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       margin: const EdgeInsets.all(EdgeInsetsConst.marginMedium),
       child: Column(
@@ -40,10 +41,7 @@ class MoviePoster extends StatelessWidget {
             child: Center(
               child: Text(
                 movie.title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: FontConst.fontSubTitle,
-                ),
+                style: textTheme.titleMedium,
               ),
             ),
           ),

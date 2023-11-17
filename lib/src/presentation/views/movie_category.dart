@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../core/utils/data_state.dart';
 import '../../core/utils/general_constants.dart';
-import '../../data/data_source/remote/api_service_movie.dart';
-import '../../data/repository/movie_repository.dart';
 import '../../domain/entity/movie.dart';
-import '../bloc/genres_bloc.dart';
 import '../bloc/movies_bloc.dart';
 import '../widget/movies_grid.dart';
+import '../widget/theme_switch_button.dart';
 
 class MoviesCategory extends StatefulWidget {
   final MoviesBloc moviesBloc;
-  final GenresBloc genres;
   final String nameCategory;
-  final Categories categories;
+  final CategoriesMovies categories;
 
   const MoviesCategory({
     super.key,
     required this.moviesBloc,
-    required this.genres,
     required this.nameCategory,
     required this.categories,
   });
@@ -27,6 +23,7 @@ class MoviesCategory extends StatefulWidget {
 }
 
 class _MoviesCategoryState extends State<MoviesCategory> {
+  @override
   void initState() {
     super.initState();
     widget.moviesBloc.fetchMovies(categories: widget.categories);
@@ -50,7 +47,7 @@ class _MoviesCategoryState extends State<MoviesCategory> {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.data is DataFailed) {
-          return Text('${FutureConst.error} ${snapshot.error}');
+          return Text('${snapshot.data?.error}');
         } else {
           List<Movie> movies = <Movie>[];
           if (snapshot.data == null) {
@@ -62,10 +59,11 @@ class _MoviesCategoryState extends State<MoviesCategory> {
             movies = snapshot.data?.data;
           }
           return Scaffold(
-            backgroundColor: Colors.black87,
             appBar: AppBar(
-              backgroundColor: Colors.black87,
               title: Text(widget.nameCategory),
+              actions: const <Widget>[
+                ThemeSwitchButton(),
+              ],
             ),
             body: MoviesGrid(
               movies: movies,

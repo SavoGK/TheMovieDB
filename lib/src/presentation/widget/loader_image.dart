@@ -13,7 +13,7 @@ class LoaderImage extends StatelessWidget {
   static const double edgeInsetsSymmetric = 50;
   static const double positionedConst = 10;
   static const double scaleImage = 10;
-  static const String imageIconAdults = 'images/icon_adults.png';
+  static const String imageIconAdults = 'assets/images/icon_adults.png';
 
   @override
   Widget build(BuildContext context) {

@@ -12,6 +12,10 @@ class DataLoading<T> extends DataState<T>{
 
 }
 
+class DataEmpty<T> extends DataState<T>{
+
+}
+
 class DataSuccess<T> extends DataState<T> {
   const DataSuccess(T data) : super(data: data);
 }

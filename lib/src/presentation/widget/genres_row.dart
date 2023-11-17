@@ -16,9 +16,10 @@ class GenresRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+    TextTheme textTheme = Theme.of(context).textTheme;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: edgeSymmetric,
         ),
@@ -44,13 +45,11 @@ class GenresRow extends StatelessWidget {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(EdgeInsetsConst.marginSmall),
+                      padding:
+                          const EdgeInsets.all(EdgeInsetsConst.marginSmall),
                       child: Text(
                         genre.name,
-                        style: const TextStyle(
-                          color: Colors.white54,
-                          fontSize: FontConst.fontText,
-                        ),
+                        style: textTheme.titleSmall,
                       ),
                     ),
                   ),

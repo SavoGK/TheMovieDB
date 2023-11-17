@@ -19,6 +19,11 @@ class MovieModel extends Movie {
   });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
+    json.forEach((key, value) {
+      if (value == null){
+        json[key] = '';
+      }
+    });
     return MovieModel(
       adult: json ['adult'],
       thumbnail: json ['backdrop_path'],
@@ -36,5 +41,4 @@ class MovieModel extends Movie {
       voteCount: json ['vote_count'],
     );
   }
-
 }
